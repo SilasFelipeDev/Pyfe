@@ -27,11 +27,20 @@ def turno_jogador():
     print('----------SUA VEZ--------------')
     print(f'Carta na mesa: {formatar_carta(mesa[-1])}')
 
-    escolha = input('1 - Comprar do Baralho \n2 - Comprar da mesa\nEscolha: ')
+    while True:
+        try:
+            escolha = int(input('1 - Comprar do Baralho \n2 - Comprar da mesa\nEscolha: '))
+            
+            if escolha not in [1, 2]:
+                print('Digite apenas [1] ou [2]!')
+                continue
+            break
+        except ValueError:
+            print('Você precisa digitar um NÚMERO válido!')
 
-    if escolha == '1':
+    if escolha == 1:
         carta = meu_baralho.pop()
-    else:
+    elif escolha == 2:
         carta = mesa.pop()
 
     mao_jogador.append(carta)
