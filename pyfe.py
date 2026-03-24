@@ -52,12 +52,12 @@ def turno_jogador():
         try:
             descarte = int(input('Escolha o numero da carta para descartar: '))
 
-            if descarte not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
-                print('Digite um indice correto')
+            if not 0 <= descarte < len(mao_jogador):
+                print('!!!DIGITE UM ÍNDICE CORRETO!!!')
                 continue
             break
         except ValueError:
-            print('Digite um número válido!')
+            print('DIGITE UM NÚMERO VÁLIDO')
 
     carta_descartada = mao_jogador.pop(descarte)
     mesa.append(carta_descartada)
