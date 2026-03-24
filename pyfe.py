@@ -47,8 +47,18 @@ def turno_jogador():
     print('----------SUA MÃO--------------')
     for i, carta in enumerate(mao_jogador):
         print(f'[{i}] {formatar_carta(carta)}')
-    
-    descarte = int(input('Escolha o numero da carta para descartar: '))
+
+    while True:
+        try:
+            descarte = int(input('Escolha o numero da carta para descartar: '))
+
+            if descarte not in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]:
+                print('Digite um indice correto')
+                continue
+            break
+        except ValueError:
+            print('Digite um número válido!')
+
     carta_descartada = mao_jogador.pop(descarte)
     mesa.append(carta_descartada)
     print(f'Carta na mesa: {formatar_carta(mesa[-1])}')
