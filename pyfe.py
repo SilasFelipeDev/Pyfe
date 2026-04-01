@@ -23,8 +23,26 @@ def formatar_carta(carta):
     nome_valor = traduzir_valor(valor)
     return f'{nome_valor} de {naipe}'
 
+def comprar_do_baralho():
+    global meu_baralho, mesa
+
+    if len(meu_baralho) == 0:
+        print('O Baralho acabou! Embaralhando cartas da mesa ...')
+
+        ultima_carta_mesa = mesa.pop()
+        meu_baralho = mesa[:]
+        random.shuffle(meu_baralho)
+        mesa = [ultima_carta_mesa]
+
+        #estudar melhor essa parte
+        if len(meu_baralho) == 0:
+            print('Não há mais cartas disponíveis!')
+            return None
+    return meu_baralho.pop()
+
 def turno_jogador():
     print('----------SUA VEZ--------------')
+    print(f'Cartas restantes no baralho: {len(meu_baralho)}')
     print(f'Carta na mesa: {formatar_carta(mesa[-1])}')
 
     while True:
@@ -39,7 +57,7 @@ def turno_jogador():
             print('Você precisa digitar um NÚMERO válido!')
 
     if escolha == 1:
-        carta = meu_baralho.pop()
+        carta = comprar_do_baralho()
     elif escolha == 2:
         carta = mesa.pop()
 
@@ -69,7 +87,7 @@ def turno_maquina():
         carta = mesa.pop()
         print('Máquina Comprou da Mesa')
     else:
-        carta = meu_baralho.pop()
+        carta = comprar_do_baralho()
         print('Máquina comprou do Baralho')
 
     mao_maquina.append(carta)
@@ -99,8 +117,6 @@ mesa = []
 mesa.append(meu_baralho.pop())
 
 print(f'Carta na mesa: {formatar_carta(mesa[-1])}')
-
-print(f'Cartas restantes no baralho: {len(meu_baralho)}')
 
 while True:
     turno_jogador()
