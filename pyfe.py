@@ -40,6 +40,43 @@ def comprar_do_baralho():
             return None
     return meu_baralho.pop()
 
+def reorganizar_mao():
+    print('\n--------REORGANIZAR MÃO---------')
+
+    while True:
+        print('Sua mão atual:')
+        for i, carta in enumerate(mao_jogador):
+            print(f'[{i}] {formatar_carta(carta)}')
+
+        print('\nOrganize sua mão digitando dois números (ex 0 -> 3) ou [s] para sair:')
+        entrada = input('> ').strip().lower()
+
+        if entrada == 's':
+            break
+
+        try:
+            partes = entrada.split()
+
+            if len(partes) != 2:
+                print('Digite exatamente dois números separados por espaço!')
+                continue
+            
+            i, j = int(partes[0]), int(partes[1])
+
+            if not (0 <= i < len(mao_jogador)) or not (0 <= j < len(mao_jogador)):
+                print(f'Índices devem estar entre 0 e {len(mao_jogador) - 1}!')
+                continue
+
+            if i == j: 
+                print('Escolha dois índices diferentes!')
+                continue
+
+            mao_jogador[i], mao_jogador[j] = mao_jogador[j], mao_jogador[i]
+            print(f'Trocado: [{i}] <=> [{j}]\n')
+
+        except ValueError:
+            print('Digite apenas números válidos!')
+
 def turno_jogador():
     print('----------SUA VEZ--------------')
     print(f'Cartas restantes no baralho: {len(meu_baralho)}')
@@ -67,6 +104,18 @@ def turno_jogador():
         print(f'[{i}] {formatar_carta(carta)}')
 
     while True:
+        while True:
+            print('\n Deseja reorganizar suas cartas? [s/n]')
+            reorganizar = input('> ').strip().lower()
+
+            if reorganizar == 's':
+                reorganizar_mao()
+                break
+            elif reorganizar == 'n':
+                break
+            else: 
+                print('Digite apenas [s] ou [n]!')
+
         try:
             descarte = int(input('Escolha o numero da carta para descartar: '))
 
